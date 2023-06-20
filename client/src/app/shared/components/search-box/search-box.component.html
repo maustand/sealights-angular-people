@@ -1,0 +1,11 @@
+<form [formGroup]="searchBoxForm">
+  <div class="position-relative">
+    <input
+      type="search"
+      class="form-control"
+      formControlName="searchText"
+      [attr.placeholder]="placeholder"
+    />
+    <i class="position-absolute bi bi-search"></i>
+  </div>
+</form>

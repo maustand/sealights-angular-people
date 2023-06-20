@@ -1,0 +1,13 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.toolbar-container {
+    display: flex;
+}
+
+.search-box-container {
+    width: 70%;
+}

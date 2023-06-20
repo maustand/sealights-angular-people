@@ -1,0 +1,19 @@
+<p>people-list works!</p>
+
+<div class="toolbar-container">
+  <div class="search-box-container">
+    <sealights-search-box
+      (searchTextChanged)="onSearchValueChange($event)"
+    ></sealights-search-box>
+  </div>
+
+  <div class="buttons-container">
+    <p>toolbox</p>
+  </div>
+</div>
+
+<div class="people-table-container">
+  <sealights-persons-table-view
+    [items]="personsDataList"
+  ></sealights-persons-table-view>
+</div>
