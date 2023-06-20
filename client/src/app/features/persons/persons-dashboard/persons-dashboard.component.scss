@@ -1,13 +1,20 @@
 :host {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.8rem;
 }
 
 .toolbar-container {
-    display: flex;
+  display: flex;
 }
 
 .search-box-container {
-    width: 70%;
+  width: 70%;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 30%;
 }

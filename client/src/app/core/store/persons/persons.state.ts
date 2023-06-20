@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Person } from '@core/models/persons';
-import { Action, State, StateContext } from '@ngxs/store';
-import { PersonActions } from './persons.actions';
 import { PersonsService } from '@core/services/dal/persons/persons.service';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { tap } from 'rxjs';
+import { PersonActions } from './persons.actions';
 
 export interface PersonsStateModel {
   items: Person[];
@@ -19,22 +19,34 @@ export interface PersonsStateModel {
 export class PersonsState {
   constructor(private readonly personsService: PersonsService) {}
 
-  // @Action(PersonActions)
-  // add({ getState, setState }: StateContext<PersonsStateModel>, { payload }: PersonsAction) {
-  //   const state = getState();
-  //   setState({ items: [ ...state.items, payload ] });
-  // }
+  @Selector() static getRaw(state: PersonsStateModel) {
+    return state.items;
+  }
 
   @Action(PersonActions.FetchAll)
   fetchAll(
-    { getState, setState }: StateContext<PersonsStateModel>,
+    { patchState }: StateContext<PersonsStateModel>,
     {}: PersonActions.FetchAll
   ) {
-    const state = getState();
-
     return this.personsService.all().pipe(
       tap((response) => {
-        setState({ items: response });
+        patchState({ items: response });
+      })
+    );
+  }
+
+  @Action(PersonActions.CreatePerson)
+  createArticle(
+    ctx: StateContext<PersonsStateModel>,
+    { payload }: PersonActions.CreatePerson
+  ) {
+    const state = ctx.getState();
+
+    return this.personsService.create(payload).pipe(
+      tap((newPerson) => {
+        ctx.setState({
+          items: [...state.items, newPerson],
+        });
       })
     );
   }

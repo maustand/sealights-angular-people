@@ -1,19 +1,22 @@
-<p>people-list works!</p>
+<h2>Persons</h2>
 
 <div class="toolbar-container">
   <div class="search-box-container">
     <sealights-search-box
-      (searchTextChanged)="onSearchValueChange($event)"
+      (searchTextChanged)="onSearchValueChanges($event)"
     ></sealights-search-box>
   </div>
 
   <div class="buttons-container">
-    <p>toolbox</p>
+    <a mat-mini-fab color="primary" routerLink="new" title="Add New Person">
+      <mat-icon>add</mat-icon>
+    </a>
   </div>
 </div>
 
 <div class="people-table-container">
   <sealights-persons-table-view
-    [items]="personsDataList"
+    *ngIf="personsList$ | async as personsData"
+    [items]="personsData"
   ></sealights-persons-table-view>
 </div>

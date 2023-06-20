@@ -1,11 +1,12 @@
 <form [formGroup]="searchBoxForm">
-  <div class="position-relative">
-    <input
-      type="search"
-      class="form-control"
-      formControlName="searchText"
-      [attr.placeholder]="placeholder"
-    />
-    <i class="position-absolute bi bi-search"></i>
-  </div>
+  <mat-form-field>
+  <input
+    matInput
+    type="search"
+    class="form-control"
+    formControlName="searchText"
+    [attr.placeholder]="placeholder"
+  />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
 </form>

@@ -2,13 +2,23 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { AppRoutingModule } from '../app-routing.module';
+import { NgxsModule } from '@ngxs/store';
+import { environment } from '@env';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { PersonsState } from './store/persons/persons.state';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
     AppRoutingModule,
+    NgxsModule.forRoot([PersonsState]),
+    NgxsRouterPluginModule.forRoot(),
+    ...(!environment.production
+      ? [NgxsReduxDevtoolsPluginModule.forRoot()]
+      : []),
   ],
   exports: [AppRoutingModule],
   providers: [],

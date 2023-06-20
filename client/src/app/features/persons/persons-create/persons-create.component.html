@@ -1,4 +1,60 @@
-<p>people-create works!</p>
+<a class="link-go-back" mat-button routerLink="..">
+  <mat-icon>arrow_back</mat-icon>
+  Return To Persons
+</a>
 
+<h2>New Person</h2>
 
-<a routerLink="..">go back</a>
+<mat-card class="card-form-new-person">
+  <mat-card-header>
+    <mat-card-subtitle>Person's Details</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form
+      id="frm-new-person"
+      class="form-new-person"
+      [formGroup]="newPersonForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" placeholder="Person's name" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Birthdate</mat-label>
+        <input
+          matInput
+          [matDatepicker]="pickerBirthdate"
+          formControlName="birthdate"
+          placeholder="Choose the person's birthdate"
+        />
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="pickerBirthdate"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #pickerBirthdate></mat-datepicker>
+      </mat-form-field>
+
+      <div class="addresses-container">
+        <h4 class="mat-mdc-card-subtitle">Person's Adresses</h4>
+      </div>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button
+      mat-button
+      type="submit"
+      aria-label="Save new person"
+      form="frm-new-person"
+      [disabled]="newPersonForm.invalid"
+    >
+      Save
+      <mat-spinner color="primary" diameter="20">
+      </mat-spinner>
+    </button>
+  </mat-card-actions>
+</mat-card>
