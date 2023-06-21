@@ -1,0 +1,48 @@
+<mat-form-field appearance="outline">
+  <mat-label>Address Name</mat-label>
+  <input matInput placeholder="set a alias for your new address" />
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>Street</mat-label>
+  <input matInput placeholder="Adress Street" />
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>Country</mat-label>
+  <mat-select (valueChange)="onCountryChanged($event)">
+    <mat-option *ngFor="let item of countries" [value]="item.id">
+      {{ item.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>City</mat-label>
+  <mat-select>
+    <mat-option *ngFor="let item of cities" [value]="item.id">
+      {{ item.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div class="toolbox">
+  <button
+    mat-icon-button
+    type="submit"
+    color="primary"
+    aria-label="Add new address to person"
+  >
+    <mat-icon>done</mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    type="button"
+    color="warn"
+    (click)="onRemoveAddress()"
+    aria-label="remove address"
+  >
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>

@@ -30,10 +30,10 @@ app.get('/api/persons', (req, res) => {
       }
 });
 
-app.post('/api/person', jsonMiddleware, (req, res) => {
+app.post('/api/persons', jsonMiddleware, (req, res) => {
   try {
-    addPerson(req.body);
-    res.status(201).json({ message: "person was created successfuly "});
+    const newPerson = addPerson(req.body);
+    res.status(201).json(newPerson);
   } catch(error) {
     res.status(500).json({ error: `failed to create a person with error: ${error.message}`})
   }
@@ -48,7 +48,7 @@ app.get('/api/cities/:countryId', (req, res) => {
   }
 });
 
-app.post('/api/city', jsonMiddleware, (req, res) => {
+app.post('/api/cities', jsonMiddleware, (req, res) => {
   try {
     addCity(req.body);
     res.status(201).json({ message: "city was added successfuly "});

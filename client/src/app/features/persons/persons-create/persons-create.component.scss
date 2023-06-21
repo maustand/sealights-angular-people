@@ -3,9 +3,7 @@ $padding-left-right-card: 1.5rem;
 .link-go-back {
   margin-bottom: 3rem;
 }
-.mat-typography h4 {
-    all: revert;
-}
+
 
 .card-form-new-person {
   mat-card-header,
@@ -19,13 +17,17 @@ $padding-left-right-card: 1.5rem;
   }
 
   .addresses-container {
-    margin: 1.4rem 0;
-
+    margin-top: 3.2rem;
   }
 
-//   .mat-mdc-card-subtitle {
-//     font-size: var(--mat-card-subtitle-text-size);
-//   }
+  .addresses-container-header {
+    display: flex;
+    margin-bottom: 1.5rem;
+    
+    .addresses-container-header-toolbox {
+      margin-left: auto;
+    }
+  }
 }
 
 .form-new-person {

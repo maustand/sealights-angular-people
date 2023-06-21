@@ -7,7 +7,7 @@
 
 <mat-card class="card-form-new-person">
   <mat-card-header>
-    <mat-card-subtitle>Person's Details</mat-card-subtitle>
+    <h4 class="mat-mdc-card-subtitle">Person's Details</h4>
   </mat-card-header>
 
   <mat-card-content>
@@ -38,8 +38,29 @@
         <mat-datepicker #pickerBirthdate></mat-datepicker>
       </mat-form-field>
 
-      <div class="addresses-container">
-        <h4 class="mat-mdc-card-subtitle">Person's Adresses</h4>
+      <div
+        class="addresses-container"
+        *ngIf="countriesList$ | async as countries"
+      >
+        <div class="addresses-container-header">
+          <h4 class="mat-mdc-card-subtitle">Person's Adresses</h4>
+
+          <div class="addresses-container-header-toolbox">
+            <button type="button" mat-mini-fab color="accent">
+              <mat-icon>location_city</mat-icon>
+            </button>
+
+            <button type="button" (click)="onAddNewAddress()" mat-mini-fab color="accent">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <sealights-add-person-address-form
+          [countries]="countries"
+          (addressRemoved)="onAddressFormRemoved($event)"
+        >
+        </sealights-add-person-address-form>
       </div>
     </form>
   </mat-card-content>

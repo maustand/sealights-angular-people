@@ -8,13 +8,14 @@ import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { PersonsState } from './store/persons/persons.state';
+import { CountriesState } from './store/countries/countries.state';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
     AppRoutingModule,
-    NgxsModule.forRoot([PersonsState]),
+    NgxsModule.forRoot([PersonsState, CountriesState]),
     NgxsRouterPluginModule.forRoot(),
     ...(!environment.production
       ? [NgxsReduxDevtoolsPluginModule.forRoot()]

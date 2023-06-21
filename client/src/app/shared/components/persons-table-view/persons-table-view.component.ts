@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-import { Person } from '@core/models/persons';
+import { Person } from '@core/models/person';
 
 type AvailableColumns = 'id' | 'name' | 'birthdate' | 'addresses';
 

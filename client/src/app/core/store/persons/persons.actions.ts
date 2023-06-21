@@ -1,4 +1,4 @@
-import { Person } from "@core/models/persons";
+import { Person } from "@core/models/person";
 
 export namespace PersonActions {
   export class FetchAll {

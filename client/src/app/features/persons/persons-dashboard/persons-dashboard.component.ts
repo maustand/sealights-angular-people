@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { Person } from '@core/models/persons';
+import { Person } from '@core/models/person';
 import { PersonActions } from '@core/store/persons/persons.actions';
 import { PersonsState } from '@core/store/persons/persons.state';
 import { Select, Store } from '@ngxs/store';

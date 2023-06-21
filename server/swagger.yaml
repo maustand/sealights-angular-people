@@ -17,8 +17,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Person'
-
-  /api/person:
     post:
       summary: create a person
       requestBody:
@@ -32,8 +30,9 @@ paths:
           description: Person created successfully
         '500':
           description: Internal server error
+
   
-  /api/city:
+  /api/cities:
     post:
       summary: add a city
       requestBody:

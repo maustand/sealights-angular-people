@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Person } from '@core/models/persons';
+import { Person } from '@core/models/person';
 import { PersonsService } from '@core/services/dal/persons/persons.service';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { tap } from 'rxjs';
