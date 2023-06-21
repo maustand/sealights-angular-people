@@ -19,6 +19,6 @@ export class PersonsService {
   }
 
   create(newPerson: Person): Observable<Person> {
-    return this.http.post<Person>(`${this.entryPoint}/`, newPerson);
+    return this.http.post<Person>(`${this.entryPoint}`, newPerson);
   }
 }

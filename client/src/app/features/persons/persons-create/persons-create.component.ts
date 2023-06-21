@@ -15,8 +15,7 @@ import { PersonActions } from '@core/store/persons/persons.actions';
 import { Store } from '@ngxs/store';
 import { Navigate } from '@ngxs/router-plugin';
 import { finalize } from 'rxjs';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'sealights-persons-create',
@@ -34,7 +33,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
@@ -50,26 +49,26 @@ export class PeopleCreateComponent {
 
   onSubmit() {
     if (this.newPersonForm.valid) {
-      // this.isLoading = true;
-      // const payload: Person = {
-      //   name: this.newPersonForm.value?.name || '',
-      //   birthdate: this.newPersonForm.value.birthdate || '',
-      //   addresses: [
-      //     {
-      //       name: 'my home',
-      //       countrId: 1,
-      //       cityId: 1,
-      //       street: 'bialik',
-      //     },
-      //   ],
-      // };
+      this.isLoading = true;
+      const payload: Person = {
+        name: this.newPersonForm.value?.name || '',
+        birthdate: this.newPersonForm.value.birthdate || '',
+        addresses: [
+          {
+            name: 'my home',
+            countrId: 1,
+            cityId: 1,
+            street: 'bialik',
+          },
+        ],
+      };
 
-      // this.store
-      //   .dispatch(new PersonActions.CreatePerson(payload))
-      //   .pipe(finalize(() => (this.isLoading = false)))
-      //   .subscribe(() => {
-      //     this.store.dispatch(new Navigate(['..']));
-      //   });
+      this.store
+        .dispatch(new PersonActions.CreatePerson(payload))
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe(() => {
+          this.store.dispatch(new Navigate(['..']));
+        });
     }
   }
 }

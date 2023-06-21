@@ -53,8 +53,10 @@
       [disabled]="newPersonForm.invalid"
     >
       Save
-      <mat-spinner color="primary" diameter="20">
-      </mat-spinner>
+      <mat-icon
+        ><mat-spinner *ngIf="isLoading" color="primary" diameter="20">
+        </mat-spinner
+      ></mat-icon>
     </button>
   </mat-card-actions>
 </mat-card>

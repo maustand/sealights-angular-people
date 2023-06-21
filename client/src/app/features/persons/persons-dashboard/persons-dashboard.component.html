@@ -14,9 +14,15 @@
   </div>
 </div>
 
-<div class="people-table-container">
-  <sealights-persons-table-view
-    *ngIf="personsList$ | async as personsData"
+<div class="people-table-container" *ngIf="personsList$ | async as personsData">
+  <sealights-persons-table-view  *ngIf="personsData.length > 0; else noAvailableData"
     [items]="personsData"
   ></sealights-persons-table-view>
 </div>
+
+
+<ng-template #noAvailableData>
+  <p>
+    No person has been added.
+  </p>
+</ng-template>
