@@ -20,14 +20,14 @@ import { PersonsTableViewComponent } from './persons-table-view/persons-table-vi
     PersonsTableViewComponent,
     MatButtonModule,
     MatIconModule,
-    RouterModule
+    RouterModule,
   ],
   templateUrl: './persons-dashboard.component.html',
   styleUrls: ['./persons-dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PeopleDashBoardComponent implements OnInit {
-  @Select(PersonsState.getRaw)
+  @Select(PersonsState.getItemsByName)
   personsList$!: Observable<Person[]>;
 
   constructor(private store: Store) {}
@@ -37,6 +37,6 @@ export class PeopleDashBoardComponent implements OnInit {
   }
 
   onSearchValueChanges(value: string) {
-    console.log(value, 5);
+    this.store.dispatch(new PersonActions.DoFilterByName(value));
   }
 }

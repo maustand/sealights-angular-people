@@ -1,9 +1,7 @@
-.form-control {
-  padding-left: 1.8rem;
+:host {
+  display: block;
 }
 
-.bi-search {
-  color: #cbcbcb;
-  top: 0.4rem;
-  left: 0.41rem;
+mat-form-field {
+  width: 100%;
 }

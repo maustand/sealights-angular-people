@@ -7,12 +7,14 @@ import { PersonActions } from './persons.actions';
 
 export interface PersonsStateModel {
   items: Person[];
+  filterValue: string;
 }
 
 @State<PersonsStateModel>({
   name: 'persons',
   defaults: {
     items: [],
+    filterValue: '',
   },
 })
 @Injectable()
@@ -21,6 +23,17 @@ export class PersonsState {
 
   @Selector() static getRaw(state: PersonsStateModel) {
     return state.items;
+  }
+
+  @Selector() static getItemsByName(state: PersonsStateModel) {
+    const filterStr = state.filterValue.toLowerCase();
+    const personsList = state.items;
+
+    const filtered = personsList.filter((i) => {
+      return i.name.toLowerCase().indexOf(filterStr) !== -1;
+    });
+
+    return filtered;
   }
 
   @Action(PersonActions.FetchAll)
@@ -36,18 +49,23 @@ export class PersonsState {
   }
 
   @Action(PersonActions.CreatePerson)
-  createArticle(
-    ctx: StateContext<PersonsStateModel>,
+  createPerson(
+    { patchState, getState }: StateContext<PersonsStateModel>,
     { payload }: PersonActions.CreatePerson
   ) {
-    const state = ctx.getState();
-
+    const state = getState();
     return this.personsService.create(payload).pipe(
       tap((newPerson) => {
-        ctx.setState({
-          items: [...state.items, newPerson],
-        });
+        patchState({ items: [...state.items, newPerson] });
       })
     );
+  }
+
+  @Action(PersonActions.DoFilterByName)
+  filterByName(
+    { patchState }: StateContext<PersonsStateModel>,
+    { nameForFilterValues }: PersonActions.DoFilterByName
+  ) {
+    patchState({ filterValue: nameForFilterValues });
   }
 }

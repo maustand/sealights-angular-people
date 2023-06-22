@@ -4,6 +4,7 @@
   <div class="search-box-container">
     <sealights-search-box
       (searchTextChanged)="onSearchValueChanges($event)"
+      [plholder]="'Search a person by name'"
     ></sealights-search-box>
   </div>
 
@@ -23,6 +24,6 @@
 
 <ng-template #noAvailableData>
   <p>
-    No person has been added.
+    No person has been added before or Filter value does not match any list element.
   </p>
 </ng-template>

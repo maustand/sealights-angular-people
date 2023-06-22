@@ -29,6 +29,7 @@
           [matDatepicker]="pickerBirthdate"
           formControlName="birthdate"
           placeholder="Choose the person's birthdate"
+          [max]="maxDateToday"
         />
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle
@@ -51,32 +52,37 @@
               (click)="onOpenAddNewCityDialog()"
               mat-mini-fab
               color="primary"
+              aria-label="Open add a new city dialog"
+              matTooltip="Open New City Modal"
             >
               <mat-icon>location_city</mat-icon>
             </button>
 
             <button
               type="button"
+              aria-label="Add an address to person"
               (click)="onAddNewAddress()"
               mat-mini-fab
               color="accent"
+              class="btn-add-new-address-form"
+              matTooltip="Append New Address"
             >
               <mat-icon>add</mat-icon>
             </button>
           </div>
         </div>
 
-        <sealights-add-person-address-form
-          *ngFor="let employee of addressesForm.controls; let i = index"
-          [id]="i"
-          [countries]="countries"
-          (addressRemoved)="onAddressFormRemoved($event)"
-        >
-        </sealights-add-person-address-form>
+        <div class="address-scroll-container">
+          <sealights-add-person-address-form
+            *ngFor="let employee of addressesForm.controls; let i = index"
+            [id]="i"
+            [countries]="countries"
+            (addressRemoved)="onAddressFormRemoved($event)"
+          >
+          </sealights-add-person-address-form>
+        </div>
       </div>
     </form>
-
-    {{ newPersonForm.value | json }}
   </mat-card-content>
 
   <mat-card-actions align="end">

@@ -29,7 +29,7 @@ import { Subscription, debounceTime, filter } from 'rxjs';
   standalone: true,
 })
 export class SearchBoxComponent implements OnInit, OnDestroy {
-  @Input() placeholder?: string;
+  @Input() plholder?: string;
 
   @Input() dbTime: number = 500;
 

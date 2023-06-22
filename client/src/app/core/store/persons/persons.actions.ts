@@ -10,4 +10,9 @@ export namespace PersonActions {
     static readonly type = '[Persons] create a new person';
     constructor(public payload: Person) {}
   }
+
+  export class DoFilterByName {
+    static readonly type = '[Persons] Filters the values of the current state by "name"';
+    constructor(public nameForFilterValues: string) {}
+  }
 }

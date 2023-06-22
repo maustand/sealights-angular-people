@@ -10,6 +10,7 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { PersonsState } from './store/persons/persons.state';
 import { CountriesState } from './store/countries/countries.state';
 import { CitiesState } from './store/cities/cities.state';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   imports: [
@@ -23,7 +24,7 @@ import { CitiesState } from './store/cities/cities.state';
       : []),
   ],
   exports: [AppRoutingModule],
-  providers: [],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

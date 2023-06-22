@@ -17,7 +17,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
+
 import { Country } from '@core/models/country';
 import { CountryActions } from '@core/store/countries/countries.actions';
 import { CountriesState } from '@core/store/countries/countries.state';
@@ -47,6 +49,7 @@ import { AddPersonAddressFormComponent } from './add-person-address-form/add-per
     MatProgressSpinnerModule,
     MatDialogModule,
     AddPersonAddressFormComponent,
+    MatTooltipModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
@@ -57,6 +60,7 @@ export class PeopleCreateComponent implements OnInit {
 
   isLoading: boolean;
   newPersonForm: FormGroup;
+  maxDateToday: Date;
 
   get addressesForm() {
     return this.newPersonForm.get('addresses') as FormArray;
@@ -76,6 +80,7 @@ export class PeopleCreateComponent implements OnInit {
         Validators.required
       ),
     });
+    this.maxDateToday = new Date();
   }
 
   ngOnInit(): void {
