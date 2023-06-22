@@ -17,9 +17,9 @@
     <mat-label>Country</mat-label>
     <mat-select
       (valueChange)="onCountryChanged($event)"
-      formControlName="countrId"
+      formControlName="countryId"
     >
-      <mat-option *ngFor="let item of countries" [value]="item.id">
+      <mat-option *ngFor="let item of countriesList" [value]="item.id">
         {{ item.name }}
       </mat-option>
     </mat-select>
@@ -28,21 +28,20 @@
   <mat-form-field appearance="outline">
     <mat-label>City</mat-label>
     <mat-select formControlName="cityId">
-      <mat-option *ngFor="let item of cities" [value]="item.id">
+      <mat-option *ngFor="let item of citiesOfCountry" [value]="item.id">
         {{ item.name }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <div class="toolbox">
-    <button
-      mat-icon-button
-      type="button"
-      color="warn"
-      (click)="onRemove()"
-      aria-label="remove address"
-    >
-      <mat-icon>delete</mat-icon>
-    </button>
-  </div>
+  <button
+    class="btn-remove"
+    mat-icon-button
+    type="button"
+    color="warn"
+    (click)="onRemove()"
+    aria-label="remove address"
+  >
+    <mat-icon>delete</mat-icon>
+  </button>
 </form>

@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
-    FormBuilder,
-    FormGroup,
-    ReactiveFormsModule,
-    Validators,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -68,7 +68,7 @@ export class AddCityInCountryModalComponent {
           this.snackBar.open('New City has been added !', '', {
             duration: 1000,
           });
-          this.dialogRef.close();
+          this.dialogRef.close({ success: true });
         });
     }
   }

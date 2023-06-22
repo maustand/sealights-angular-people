@@ -15,5 +15,10 @@ type AvailableColumns = 'id' | 'name' | 'birthdate' | 'addresses';
 export class PersonsTableViewComponent {
   @Input({ required: true }) items: Person[] = [];
 
-  @Input() displayedColumns?: AvailableColumns[] = ['id', 'name', 'birthdate', 'addresses'];
+  @Input() displayedColumns?: AvailableColumns[] = [
+    'id',
+    'name',
+    'birthdate',
+    'addresses',
+  ];
 }

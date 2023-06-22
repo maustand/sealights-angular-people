@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { City } from '@core/models/city';
-import { Person } from '@core/models/person';
 import { environment } from '@env';
 import { Observable } from 'rxjs';
 
@@ -19,7 +18,7 @@ export class CitiesService {
     return this.http.get<City[]>(`${this.entryPoint}`);
   }
 
-  create(cityPayload: City): Observable<Person> {
-    return this.http.post<Person>(`${this.entryPoint}`, cityPayload);
+  create(cityPayload: City): Observable<City> {
+    return this.http.post<City>(`${this.entryPoint}`, cityPayload);
   }
 }

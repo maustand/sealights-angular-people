@@ -7,9 +7,9 @@ import { Person } from '@core/models/person';
 import { PersonActions } from '@core/store/persons/persons.actions';
 import { PersonsState } from '@core/store/persons/persons.state';
 import { Select, Store } from '@ngxs/store';
-import { PersonsTableViewComponent } from '@shared/components/persons-table-view/persons-table-view.component';
 import { SearchBoxComponent } from '@shared/components/search-box/search-box.component';
 import { Observable } from 'rxjs';
+import { PersonsTableViewComponent } from './persons-table-view/persons-table-view.component';
 
 @Component({
   selector: 'sealight-persons-dashboard',

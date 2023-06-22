@@ -39,18 +39,25 @@ import { Country, CountryCity } from '@core/models/country';
 export class AddPersonAddressFormComponent implements OnInit {
   @Input({ required: true }) id: number;
 
-  @Input({ required: true }) countries: Country[];
+  @Input({ required: true }) set countries(items: Country[]) {
+    this.countriesList = items;
+    const currentCountryId = this.addressForm?.get('countryId')?.value;
+    //currentCountryId could be 0 due country id.
+    if (currentCountryId !== null && currentCountryId !== undefined) {
+      this.onCountryChanged(currentCountryId);
+    }
+  }
 
   @Output() addressRemoved: EventEmitter<number>;
 
   addressForm!: FormGroup;
-
-  cities: CountryCity[];
+  countriesList: Country[];
+  citiesOfCountry: CountryCity[];
 
   constructor(private controlContainer: ControlContainer) {
     this.id = 0;
-    this.countries = [];
-    this.cities = [];
+    this.countriesList = [];
+    this.citiesOfCountry = [];
     this.addressRemoved = new EventEmitter<number>();
   }
 
@@ -61,8 +68,9 @@ export class AddPersonAddressFormComponent implements OnInit {
   }
 
   onCountryChanged(countryIdSelected: number): void {
-    const country = this.countries.find((i) => i.id === countryIdSelected);
-    this.cities = country && country.cities.length > 0 ? country.cities : [];
+    const country = this.countriesList.find((i) => i.id === countryIdSelected);
+    this.citiesOfCountry =
+      country && country.cities.length > 0 ? country.cities : [];
     this.addressForm.get('cityId')?.reset();
   }
 

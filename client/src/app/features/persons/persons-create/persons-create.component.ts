@@ -24,8 +24,8 @@ import { CountriesState } from '@core/store/countries/countries.state';
 import { PersonActions } from '@core/store/persons/persons.actions';
 import { Navigate } from '@ngxs/router-plugin';
 import { Select, Store } from '@ngxs/store';
-import { AddCityInCountryModalComponent } from '@shared/components/add-city-in-country-modal/add-city-in-country-modal.component';
-import { Observable, finalize } from 'rxjs';
+import { Observable, filter, finalize, take } from 'rxjs';
+import { AddCityInCountryModalComponent } from './add-city-in-country-modal/add-city-in-country-modal.component';
 import { AddPersonAddressFormComponent } from './add-person-address-form/add-person-address-form.component';
 
 @Component({
@@ -99,7 +99,17 @@ export class PeopleCreateComponent implements OnInit {
   }
 
   onOpenAddNewCityDialog(): void {
-    this.dialog.open(AddCityInCountryModalComponent, {});
+    const modal = this.dialog.open(AddCityInCountryModalComponent, {});
+
+    modal
+      .afterClosed()
+      .pipe(
+        filter((i) => i?.success),
+        take(1)
+      )
+      .subscribe(() => {
+        this.store.dispatch(CountryActions.FetchAll);
+      });
   }
 
   onAddNewAddress() {
@@ -110,7 +120,7 @@ export class PeopleCreateComponent implements OnInit {
   private addNewPersonAddressForm(): FormGroup {
     return this.frmBuilder.group({
       name: ['', Validators.required],
-      countrId: [null, [Validators.required, Validators.min(0)]], // id could be 0 due server uses list.lenght
+      countryId: [null, [Validators.required, Validators.min(0)]], // id could be 0 due server uses list.lenght
       cityId: [null, [Validators.required, Validators.min(0)]],
       street: ['', Validators.required],
     });
