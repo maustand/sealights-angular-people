@@ -19,7 +19,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Country, CountryCity } from '@core/models/country';
-import { AddressPerson } from '@core/models/person';
 
 @Component({
   selector: 'sealights-add-person-address-form',
@@ -64,6 +63,7 @@ export class AddPersonAddressFormComponent implements OnInit {
   onCountryChanged(countryIdSelected: number): void {
     const country = this.countries.find((i) => i.id === countryIdSelected);
     this.cities = country && country.cities.length > 0 ? country.cities : [];
+    this.addressForm.get('cityId')?.reset();
   }
 
   onRemove(): void {

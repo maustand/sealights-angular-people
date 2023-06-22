@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -18,12 +19,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { RouterLink } from '@angular/router';
 import { Country } from '@core/models/country';
-import { Person } from '@core/models/person';
 import { CountryActions } from '@core/store/countries/countries.actions';
 import { CountriesState } from '@core/store/countries/countries.state';
 import { PersonActions } from '@core/store/persons/persons.actions';
 import { Navigate } from '@ngxs/router-plugin';
 import { Select, Store } from '@ngxs/store';
+import { AddCityInCountryModalComponent } from '@shared/components/add-city-in-country-modal/add-city-in-country-modal.component';
 import { Observable, finalize } from 'rxjs';
 import { AddPersonAddressFormComponent } from './add-person-address-form/add-person-address-form.component';
 
@@ -44,6 +45,7 @@ import { AddPersonAddressFormComponent } from './add-person-address-form/add-per
     MatDatepickerModule,
     MatNativeDateModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
     AddPersonAddressFormComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -60,9 +62,13 @@ export class PeopleCreateComponent implements OnInit {
     return this.newPersonForm.get('addresses') as FormArray;
   }
 
-  constructor(private frmBuilder: FormBuilder, private store: Store) {
+  constructor(
+    private frmBuilder: FormBuilder,
+    private store: Store,
+    public dialog: MatDialog
+  ) {
     this.isLoading = false;
-    this.newPersonForm = this.frmBuilder.nonNullable.group({
+    this.newPersonForm = this.frmBuilder.group({
       name: ['', [Validators.required]],
       birthdate: ['', [Validators.required]],
       addresses: this.frmBuilder.array(
@@ -79,21 +85,8 @@ export class PeopleCreateComponent implements OnInit {
   onSubmit(): void {
     if (this.newPersonForm.valid) {
       this.isLoading = true;
-      const payload: Person = {
-        name: this.newPersonForm.value?.name || '',
-        birthdate: this.newPersonForm.value.birthdate || '',
-        addresses: [
-          {
-            name: 'my home',
-            countrId: 1,
-            cityId: 1,
-            street: 'bialik',
-          },
-        ],
-      };
-
       this.store
-        .dispatch(new PersonActions.CreatePerson(payload))
+        .dispatch(new PersonActions.CreatePerson(this.newPersonForm.value))
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe(() => {
           this.store.dispatch(new Navigate(['..']));
@@ -105,7 +98,10 @@ export class PeopleCreateComponent implements OnInit {
     this.addressesForm.removeAt(id);
   }
 
-  onAddNewCity(): void {}
+  onOpenAddNewCityDialog(): void {
+    this.dialog.open(AddCityInCountryModalComponent, {});
+  }
+
   onAddNewAddress() {
     const newFormGroud = this.addNewPersonAddressForm();
     this.addressesForm.push(newFormGroud);
@@ -114,9 +110,9 @@ export class PeopleCreateComponent implements OnInit {
   private addNewPersonAddressForm(): FormGroup {
     return this.frmBuilder.group({
       name: ['', Validators.required],
-      countrId: [-1, Validators.required],
-      cityId: [-1, Validators.required],
-      street: ['', Validators.required]
+      countrId: [null, [Validators.required, Validators.min(0)]], // id could be 0 due server uses list.lenght
+      cityId: [null, [Validators.required, Validators.min(0)]],
+      street: ['', Validators.required],
     });
   }
 }

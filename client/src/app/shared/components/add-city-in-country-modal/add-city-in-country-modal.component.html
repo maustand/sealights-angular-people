@@ -1,0 +1,47 @@
+<h3 mat-dialog-title>Add a New City</h3>
+<div
+  class="mat-dialog-content-container"
+  mat-dialog-content
+  *ngIf="countriesList$ | async as countries"
+>
+  <form
+    id="add-city-in-country-modal-form"
+    [formGroup]="newCityForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>Country</mat-label>
+      <mat-select formControlName="countryId">
+        <mat-option *ngFor="let item of countries" [value]="item.id">
+          {{ item.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" placeholder="Person's name" />
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions align="end">
+  <button
+    mat-button
+    type="button"
+    aria-label="Dismiss modal"
+    (click)="onDismiss()"
+  >
+    Dismiss
+  </button>
+  <button
+    mat-button
+    type="submit"
+    aria-label="Add a new city for a country"
+    form="add-city-in-country-modal-form"
+    (submit)="onSubmit()"
+    [disabled]="newCityForm.invalid"
+    cdkFocusInitial
+  >
+    Add
+  </button>
+</div>
