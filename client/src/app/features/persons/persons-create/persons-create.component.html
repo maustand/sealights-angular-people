@@ -46,17 +46,30 @@
           <h4 class="mat-mdc-card-subtitle">Person's Adresses</h4>
 
           <div class="addresses-container-header-toolbox">
-            <button type="button" mat-mini-fab color="accent">
+            <button
+              type="button"
+              (click)="onAddNewCity()"
+              mat-mini-fab
+              color="accent"
+            >
               <mat-icon>location_city</mat-icon>
             </button>
 
-            <button type="button" (click)="onAddNewAddress()" mat-mini-fab color="accent">
+            <button
+              type="button"
+              (click)="onAddNewAddress()"
+              mat-mini-fab
+              color="accent"
+            >
               <mat-icon>add</mat-icon>
             </button>
           </div>
         </div>
+        
 
         <sealights-add-person-address-form
+          *ngFor="let employee of addressesForm.controls; let i = index"
+          [id]="i"
           [countries]="countries"
           (addressRemoved)="onAddressFormRemoved($event)"
         >

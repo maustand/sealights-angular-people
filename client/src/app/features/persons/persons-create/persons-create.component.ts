@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
+  FormArray,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
@@ -13,18 +14,18 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { RouterLink } from '@angular/router';
+import { Country } from '@core/models/country';
 import { Person } from '@core/models/person';
-import { PersonActions } from '@core/store/persons/persons.actions';
-import { Select, Store } from '@ngxs/store';
-import { Navigate } from '@ngxs/router-plugin';
-import { Observable, finalize } from 'rxjs';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AddPersonAddressFormComponent } from './add-person-address-form/add-person-address-form.component';
 import { CountryActions } from '@core/store/countries/countries.actions';
 import { CountriesState } from '@core/store/countries/countries.state';
-import { Country } from '@core/models/country';
+import { PersonActions } from '@core/store/persons/persons.actions';
+import { Navigate } from '@ngxs/router-plugin';
+import { Select, Store } from '@ngxs/store';
+import { Observable, finalize } from 'rxjs';
+import { AddPersonAddressFormComponent } from './add-person-address-form/add-person-address-form.component';
 
 @Component({
   selector: 'sealights-persons-create',
@@ -55,11 +56,19 @@ export class PeopleCreateComponent implements OnInit {
   isLoading: boolean;
   newPersonForm: FormGroup;
 
+  get addressesForm() {
+    return this.newPersonForm.get('addresses') as FormArray;
+  }
+
   constructor(private frmBuilder: FormBuilder, private store: Store) {
     this.isLoading = false;
     this.newPersonForm = this.frmBuilder.nonNullable.group({
       name: ['', [Validators.required]],
       birthdate: ['', [Validators.required]],
+      addresses: this.frmBuilder.array(
+        [this.addNewPersonAddressForm()],
+        Validators.required
+      ),
     });
   }
 
@@ -93,10 +102,21 @@ export class PeopleCreateComponent implements OnInit {
   }
 
   onAddressFormRemoved(id: number) {
-    console.log(id);
+    this.addressesForm.removeAt(id);
   }
 
+  onAddNewCity(): void {}
   onAddNewAddress() {
+    const newFormGroud = this.addNewPersonAddressForm();
+    this.addressesForm.push(newFormGroud);
+  }
 
+  private addNewPersonAddressForm(): FormGroup {
+    return this.frmBuilder.group({
+      name: ['', Validators.required],
+      countrId: [-1, Validators.required],
+      cityId: [-1, Validators.required],
+      street: ['', Validators.required]
+    });
   }
 }

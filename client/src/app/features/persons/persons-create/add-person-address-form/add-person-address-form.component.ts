@@ -4,13 +4,14 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
 import {
-  FormBuilder,
+  ControlContainer,
+  FormArray,
   FormGroup,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -35,68 +36,37 @@ import { AddressPerson } from '@core/models/person';
   templateUrl: './add-person-address-form.component.html',
   styleUrls: ['./add-person-address-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // providers: [
-  //   {
-  //     provide: NG_VALUE_ACCESSOR,
-  //     useExisting: forwardRef(() => AddPersonAddressFormComponent),
-  //     multi: true,
-  //   },
-  // ],
 })
-export class AddPersonAddressFormComponent {
-  @Input({ required: true }) countries: Country[];
+export class AddPersonAddressFormComponent implements OnInit {
+  @Input({ required: true }) id: number;
 
-  @Output() addressAdded: EventEmitter<AddressPerson>;
+  @Input({ required: true }) countries: Country[];
 
   @Output() addressRemoved: EventEmitter<number>;
 
-  addressForm: FormGroup;
+  addressForm!: FormGroup;
 
-  cities: CountryCity[]
+  cities: CountryCity[];
 
-  constructor(private frmBuilder: FormBuilder) {
+  constructor(private controlContainer: ControlContainer) {
+    this.id = 0;
     this.countries = [];
     this.cities = [];
-    this.addressAdded = new EventEmitter<AddressPerson>();
     this.addressRemoved = new EventEmitter<number>();
-
-    this.addressForm = this.frmBuilder.group({
-      name: ['', [Validators.required]],
-      countrId: [-1, [Validators.required]],
-      cityId: [-1, [Validators.required]],
-      street: ['', [Validators.required]],
-    });
   }
 
-  onChangeFn(value: string): void {}
-
-  onTouchedFn(): void {}
-
-  writeValue(value: string): void {
-    // this.inputValue = value;
-    // this.changeDetectorRef.markForCheck();
-  }
-
-  registerOnChange(fn: (value: string) => void): void {
-    this.onChangeFn = fn;
-  }
-
-  registerOnTouched(fn: () => void): void {
-    this.onTouchedFn = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    // this.isDisabled = isDisabled;
-    // this.changeDetectorRef.markForCheck();
+  ngOnInit(): void {
+    this.addressForm = (
+      this.controlContainer.control?.get('addresses') as FormArray
+    ).controls[this.id] as FormGroup;
   }
 
   onCountryChanged(countryIdSelected: number): void {
     const country = this.countries.find((i) => i.id === countryIdSelected);
-    this.cities = (country && country.cities.length > 0) ? country.cities : [];
-    console.log(this.cities, country)
+    this.cities = country && country.cities.length > 0 ? country.cities : [];
   }
 
-  onRemoveAddress(): void {
-    this.addressRemoved.emit(1);
+  onRemove(): void {
+    this.addressRemoved.emit(this.id);
   }
 }
